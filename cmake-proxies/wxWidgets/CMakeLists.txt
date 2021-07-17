@@ -219,25 +219,6 @@ if( "${wxTOOLKIT}" MATCHES "GTK." )
    pkg_check_modules( GLIB REQUIRED IMPORTED_TARGET GLOBAL ${glib} )
 endif()
 
-find_file( WXVERSION_H
-   NAMES
-      wx/version.h
-   PATHS
-     ${INCLUDES}
-   NO_DEFAULT_PATH
-)
-
-if( NOT WXVERSION_H )
-   message( FATAL_ERROR "wxWidgets version.h header not found" )
-endif()
-
-file(
-   STRINGS
-      "${WXVERSION_H}" output
-   REGEX
-      "^#define +wxVERSION_STRING +"
-)
-
 foreach( target "${TARGET}" wxBase )
    target_include_directories( ${target} INTERFACE ${INCLUDES} )
    target_compile_definitions( ${target} INTERFACE ${DEFINES} )
