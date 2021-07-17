@@ -101,8 +101,8 @@ else()
       # Windows requires it due to missing "#include" directives
       set( wxBUILD_PRECOMP YES )
    elseif( CMAKE_SYSTEM_NAME MATCHES "Darwin" )
-      # Want accessibility
-      set( wxUSE_ACCESSIBILITY YES )
+      # not supported anymore or so the builds claim
+      set( wxUSE_ACCESSIBILITY NO )
 
       # Causes problems on OSX, so turn it off
       set( wxBUILD_PRECOMP NO )
@@ -133,33 +133,8 @@ else()
       WXUSINGDLL
    )
 
-   # For all required libs, gather all of the interface target
-   # properties and merge them into the wxWidgets target
-   foreach( lib adv base core html net qa xml )
-      get_target_property( value ${lib} INTERFACE_INCLUDE_DIRECTORIES )
-      if( value )
-         list( APPEND INCLUDES ${value} )
-         list( REMOVE_DUPLICATES INCLUDES )
-      endif()
-
-      get_target_property( value ${lib} INTERFACE_COMPILE_DEFINITIONS )
-      if( value )
-         list( APPEND DEFINES ${value} )
-         list( REMOVE_DUPLICATES DEFINES )
-      endif()
-
-      get_target_property( value ${lib} INTERFACE_COMPILE_OPTIONS )
-      if( value )
-         list( APPEND COPTS ${value} )
-         list( REMOVE_DUPLICATES COPTS )
-      endif()
-
-      get_target_property( value ${lib} INTERFACE_LINK_LIBRARIES )
-      if( value)
-         list( APPEND LIBRARIES ${lib} ${value} )
-         list( REMOVE_DUPLICATES LIBRARIES )
-      endif()
-   endforeach()
+   list( APPEND LIBRARIES wx::adv wx::base wx::core wx::html wx::net wx::qa wx::xml )
+   list( REMOVE_DUPLICATES LIBRARIES )
 
    # Do NOT split the generator expressions across multiple lines here.
    # CMake appears to have a bug and doesn't seem to handle it correctly
@@ -213,25 +188,6 @@ if( "${wxTOOLKIT}" MATCHES "GTK." )
    pkg_check_modules( GTK REQUIRED IMPORTED_TARGET GLOBAL ${gtk} )
    pkg_check_modules( GLIB REQUIRED IMPORTED_TARGET GLOBAL ${glib} )
 endif()
-
-find_file( WXVERSION_H
-   NAMES
-      wx/version.h
-   PATHS
-     ${INCLUDES}
-   NO_DEFAULT_PATH
-)
-
-if( NOT WXVERSION_H )
-   message( FATAL_ERROR "wxWidgets version.h header not found" )
-endif()
-
-file(
-   STRINGS
-      "${WXVERSION_H}" output
-   REGEX
-      "^#define +wxVERSION_STRING +"
-)
 
 foreach( target "${TARGET}" wxBase )
    target_include_directories( ${target} INTERFACE ${INCLUDES} )
