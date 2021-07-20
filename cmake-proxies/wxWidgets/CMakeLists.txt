@@ -106,8 +106,8 @@ else()
       # Windows requires it due to missing "#include" directives
       set( wxBUILD_PRECOMP YES )
    elseif( CMAKE_SYSTEM_NAME MATCHES "Darwin" )
-      # Want accessibility
-      set( wxUSE_ACCESSIBILITY YES )
+      # not supported anymore or so the builds claim
+      set( wxUSE_ACCESSIBILITY NO )
 
       # Causes problems on OSX, so turn it off
       set( wxBUILD_PRECOMP NO )
