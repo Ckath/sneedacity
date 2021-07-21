@@ -14,9 +14,9 @@ cd build
 cmake_options=(
     -G "Unix Makefiles"
     -DCMAKE_BUILD_TYPE=Release
-    -Dsneedacity_lib_preference=local # need local for wxwidgets at this time
+    -Dsneedacity_lib_preference=system
     -Dsneedacity_obey_system_dependencies=On # And force it!
-    -Dsneedacity_use_wxwidgets=local # wxWidgets 3.1 is not available
+    -Dsneedacity_use_wxwidgets=system
     -Dsneedacity_use_expat=system
     -Dsneedacity_use_lame=system
     -Dsneedacity_use_sndfile=system
