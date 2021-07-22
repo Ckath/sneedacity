@@ -79,23 +79,18 @@ else()
 
    set( WXWIN $ENV{WXWIN} )
    if( "${WXWIN}" STREQUAL "" )
-      # XXX: Look into importing instead of adding to this project
-      set( WXWIN "${_INTDIR}/wxwidgets" )
+      # use the git submodule in lib-src if not specified
+      set( WXWIN "${CMAKE_SOURCE_DIR}/lib-src/wxwidgets" )
    endif()
 
-   if( NOT EXISTS "${WXWIN}" )
+   if( NOT EXISTS "${WXWIN}/src" )
       if( NOT GIT_FOUND )
          message( FATAL_ERROR "Git is needed to clone wxWidgets" )
       endif()
 
       execute_process(
          COMMAND
-            ${GIT_EXECUTABLE} clone
-                              --depth 1
-                              --single-branch
-                              --recurse-submodules
-                              https://github.com/audacity/wxwidgets
-                              "${WXWIN}"
+            ${GIT_EXECUTABLE} submodule update --init --recursive
       )
    endif()
 
