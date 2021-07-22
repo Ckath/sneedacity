@@ -1,0 +1,4 @@
+[submodule "lib-src/wxwidgets"]
+	path = lib-src/wxwidgets
+	url = "https://github.com/wxWidgets/wxWidgets.git"
+	ignore = dirty
