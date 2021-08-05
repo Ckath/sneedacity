@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-conan --version
-
 if [ ! -d "sneedacity" ]
 then
     git clone https://github.com/Sneeds-Feed-and-Seed/sneedacity

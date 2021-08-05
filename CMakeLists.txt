@@ -97,7 +97,6 @@ if( APPLE )
 endif()
 
 # Add our module path
-# CMAKE_BINARY_DIR is required for Conan to work
 set( SNEEDACITY_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake-proxies/cmake-modules")
 set( CMAKE_MODULE_PATH 
    ${SNEEDACITY_MODULE_PATH}
